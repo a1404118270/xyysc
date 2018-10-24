@@ -41,7 +41,7 @@
 
 <script>
   import {  Field, CellGroup, Button, NavBar,Icon, Toast } from 'vant';
-  import {reqRegistere} from "../../api";
+  import {reqRegister} from "../../api";
 
   export default {
     data(){
@@ -59,11 +59,17 @@
       [Icon.name]: Icon,
       [Toast.name]: Toast,
     },
+    created() {
+      // 如果yoghurt有登录状态则不能进入 注册页面直接跳转到用户中心页面
+      if (Cookies.get('userid')) {
+        this.$router.replace('profile')
+      }
+    },
     methods: {
       toLogin(){
         this.$router.replace('/login')
       },
-      register(){
+      async register(){
       //  收集表单数据
         const {username, password, password2} = this
       //  验证数据合法性
@@ -80,8 +86,15 @@
           Toast('两次密码输入不一致')
           return
         }
-        console.log('ok');
+
       //  发送注册请求
+        const result = await reqRegister({username, password})
+        if (result.code === 0) { //成功
+          this.$store.dispatch('recordUser',result.data)
+          this.$router.replace('/profile')
+        } else {
+          Toast(result.msg)
+        }
       }
     }
   }
