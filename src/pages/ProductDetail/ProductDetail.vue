@@ -1,49 +1,49 @@
 <template>
   <div class="productDetail-container">
     <van-nav-bar title="商品搜索" class="navbar" fixed>
-      <van-icon name="arrow-left" slot="left"  color="#fff" size="18px" @click="$router.back()"/>
+      <van-icon name="arrow-left" slot="left" color="#fff" size="18px" @click="$router.back()"/>
     </van-nav-bar>
     <div class="goods">
       <van-swipe class="goods-swipe" :autoplay="3000">
-        <van-swipe-item v-for="thumb in goods.thumb" :key="thumb">
-          <img :src="thumb" >
+        <van-swipe-item v-for="item in product.info_Img" :key="item">
+          <img :src="item">
         </van-swipe-item>
       </van-swipe>
 
       <van-cell-group>
         <van-cell>
-          <div class="goods-title">{{ goods.title }}</div>
-          <div class="goods-price">{{ formatPrice(goods.price) }}</div>
+          <div class="goods-title">{{ product.title }}</div>
+          <div class="goods-price">{{ product.price }}</div>
         </van-cell>
         <van-cell class="goods-express">
-          <van-col span="10">运费：{{ goods.express }}</van-col>
-          <van-col span="14">剩余：{{ goods.remain }}</van-col>
+          <van-col span="10">运费：{{ product.express }}</van-col>
+          <van-col span="14">剩余：{{ product.stock }}</van-col>
         </van-cell>
       </van-cell-group>
 
       <van-cell-group class="goods-cell-group">
-        <van-cell value="进入店铺" is-link @click="sorry">
+        <van-cell value="进入店铺" is-link >
           <template slot="title">
             <span class="van-cell-text">校园店</span>
             <van-tag class="goods-tag" type="danger">官方</van-tag>
           </template>
         </van-cell>
-        <van-cell title="线下门店" is-link @click="sorry" />
-        <van-cell title="服务" is-link @click="sorry" />
+        <van-cell title="线下门店" is-link />
+        <van-cell title="服务" is-link />
       </van-cell-group>
 
 
       <van-goods-action>
-        <van-goods-action-mini-btn icon="chat" @click="sorry">
+        <van-goods-action-mini-btn icon="chat" >
           客服
         </van-goods-action-mini-btn>
-        <van-goods-action-mini-btn icon="like-o" @click="onClickCart">
-          喜欢
+        <van-goods-action-mini-btn icon="like-o" >
+          关注
         </van-goods-action-mini-btn>
-        <van-goods-action-big-btn @click="sorry">
+        <van-goods-action-big-btn >
           加入购物车
         </van-goods-action-big-btn>
-        <van-goods-action-big-btn primary @click="sorry">
+        <van-goods-action-big-btn primary >
           立即购买
         </van-goods-action-big-btn>
       </van-goods-action>
@@ -66,6 +66,8 @@
     GoodsActionMiniBtn,
     NavBar
   } from 'vant';
+  import {mapState} from 'vuex'
+
   export default {
     components: {
       [Tag.name]: Tag,
@@ -82,38 +84,40 @@
     },
     data() {
       return {
-        goods: {
-          title: '美国伽力果（约680g/3个）',
-          price: 2680,
-          express: '免运费',
-          remain: 19,
-          thumb: [
-            'https://img.yzcdn.cn/public_files/2017/10/24/e5a5a02309a41f9f5def56684808d9ae.jpeg',
-            'https://img.yzcdn.cn/public_files/2017/10/24/1791ba14088f9c2be8c610d0a6cc0f93.jpeg'
-          ]
-        }
+        product: {} //商品详情
       };
     },
-    methods: {
-      formatPrice() {
-        return '¥' + (this.goods.price / 100).toFixed(2);
-      },
-      onClickCart() {
-        Toast('暂无后续逻辑~');
-      },
-      sorry() {
-        Toast('暂无后续逻辑~');
+    computed: {
+      ...mapState(['productList'])
+    },
+    beforeCreate(){
+
+    },
+    created() {
+      //  解决刷新数据丢失问题
+      this.$store.dispatch('getProductsList')
+
+    },
+    watch: {
+      productList(){
+        //获取 当前产品的信息
+        this.product  = this.productList[this.$route.params.id]
+        console.log(this.$route.id);
       }
+    }
+    ,
+    methods: {
+
     }
   };
 </script>
 
 <style scoped lang="less">
-  .productDetail-container{
+  .productDetail-container {
     overflow: hidden;
     padding-top: 46px;
-    .navbar{
-      background-color:#FF852A;
+    .navbar {
+      background-color: #FF852A;
       font-size: 16px;
       color: #fff;
     }

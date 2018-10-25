@@ -1,6 +1,12 @@
 <template>
  <div>
-   <router-view/>
+   <keep-alive >
+     <router-view v-if="this.$route.meta.keepAlive" />
+   </keep-alive>
+
+     <router-view v-if="!this.$route.meta.keepAlive"/>
+
+
   <FooterBar v-if="$route.meta.isShow"/>
  </div>
 </template>

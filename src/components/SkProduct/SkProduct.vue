@@ -1,42 +1,11 @@
 <template>
   <div class="sk-container" ref="skList">
        <ul class="sk-list" >
-         <li class="sk-item">
-           <img src="./images/prds/prd.jpg" alt="">
-           <span class="newPrice">￥99.00</span>
-           <span class="oldPrice">￥299.00</span>
+         <li class="sk-item" v-for="(product,index) in skProduct" :key="index">
+           <img :src="product.img_Url" alt="">
+           <span class="newPrice">￥{{product.price}}</span>
+           <span class="oldPrice">￥{{product.old_price}}</span>
          </li>
-         <li class="sk-item">
-           <img src="./images/prds/prd1.jpg" alt="">
-           <span class="newPrice">￥99.00</span>
-           <span class="oldPrice">￥299.00</span>
-         </li>
-         <li class="sk-item">
-           <img src="./images/prds/prd2.jpg" alt="">
-           <span class="newPrice">￥99.00</span>
-           <span class="oldPrice">￥299.00</span>
-         </li>
-         <li class="sk-item">
-           <img src="./images/prds/prd3.jpg" alt="">
-           <span class="newPrice">￥99.00</span>
-           <span class="oldPrice">￥299.00</span>
-         </li>
-         <li class="sk-item">
-           <img src="./images/prds/prd4.jpg" alt="">
-           <span class="newPrice">￥99.00</span>
-           <span class="oldPrice">￥299.00</span>
-         </li>
-         <li class="sk-item">
-           <img src="./images/prds/prd.jpg" alt="">
-           <span class="newPrice">￥99.00</span>
-           <span class="oldPrice">￥299.00</span>
-         </li>
-         <li class="sk-item">
-           <img src="./images/prds/prd1.jpg" alt="">
-           <span class="newPrice">￥99.00</span>
-           <span class="oldPrice">￥299.00</span>
-         </li>
-
        </ul>
 
 
@@ -46,11 +15,10 @@
 <script>
   import BScroll from 'better-scroll'
   export default {
+    props:{
+      skProduct: Array
+    },
     mounted(){
-      //DOM 渲染完成后调用
-     this.$nextTick(()=>{
-       this._initScroll()
-     })
 
     },
     methods:{
@@ -62,6 +30,16 @@
         new BScroll(this.$refs.skList,{
           scrollX:true
         })
+      }
+    },
+    watch:{
+      skProduct(){
+        //DOM 渲染完成后调用
+        this.$nextTick(()=>{
+          this._initScroll()
+        })
+        // console.log(skProduct);
+
       }
     }
   }
@@ -87,13 +65,13 @@
         .newPrice{
           display: block;
           font-size: 14px;
-          font-weight: bold;
           color: red;
         }
         .oldPrice{
           display: block;
           text-decoration: line-through;
           font-size: 14px;
+          color: #888;
         }
       }
       &::after{

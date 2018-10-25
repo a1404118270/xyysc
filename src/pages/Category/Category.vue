@@ -4,149 +4,13 @@
     </van-nav-bar>
     <div class="tab-bar">
       <van-tabs>
-        <van-tab title="女装">
+        <van-tab :title="category.title"  v-for="(category,index) in categorys" :key="index">
          <div class="category-list">
-           <div class="category-item">
-             <img src="./p1.jpg" alt="">
-             <p>连衣裙</p>
-           </div>
-           <div class="category-item">
-             <img src="./p1.jpg" alt="">
-             <p>连衣裙</p>
-           </div>
-           <div class="category-item">
-             <img src="./p1.jpg" alt="">
-             <p>连衣裙</p>
-           </div>
-           <div class="category-item">
-             <img src="./p1.jpg" alt="">
-             <p>连衣裙</p>
-           </div>
-           <div class="category-item">
-             <img src="./p1.jpg" alt="">
-             <p>连衣裙</p>
+           <div class="category-item" v-for="(item, index) in category.producks" :key="index">
+             <img :src="item.pro_img" alt="">
+             <p>{{item.pro_title}}</p>
            </div>
          </div>
-        </van-tab>
-        <van-tab title="美食">
-          <div class="category-list">
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>休闲食品</p>
-            </div>
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>连衣裙</p>
-            </div>
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>连衣裙</p>
-            </div>
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>连衣裙</p>
-            </div>
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>连衣裙</p>
-            </div>
-          </div>
-        </van-tab>
-        <van-tab title="居家日用">
-          <div class="category-list">
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>洗碗机</p>
-            </div>
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>连衣裙</p>
-            </div>
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>连衣裙</p>
-            </div>
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>连衣裙</p>
-            </div>
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>连衣裙</p>
-            </div>
-          </div>
-        </van-tab>
-        <van-tab title="男装">
-          <div class="category-list">
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>西装</p>
-            </div>
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>连衣裙</p>
-            </div>
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>连衣裙</p>
-            </div>
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>连衣裙</p>
-            </div>
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>连衣裙</p>
-            </div>
-          </div>
-        </van-tab>
-        <van-tab title="鞋品">
-          <div class="category-list">
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>运动鞋</p>
-            </div>
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>连衣裙</p>
-            </div>
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>连衣裙</p>
-            </div>
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>连衣裙</p>
-            </div>
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>连衣裙</p>
-            </div>
-          </div>
-        </van-tab>
-        <van-tab title="数码">
-          <div class="category-list">
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>智能手机</p>
-            </div>
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>连衣裙</p>
-            </div>
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>连衣裙</p>
-            </div>
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>连衣裙</p>
-            </div>
-            <div class="category-item">
-              <img src="./p1.jpg" alt="">
-              <p>连衣裙</p>
-            </div>
-          </div>
         </van-tab>
       </van-tabs>
     </div>
@@ -155,7 +19,16 @@
 
 <script>
   import { Tab, Tabs ,Icon,NavBar} from 'vant';
+  import {mapState} from 'vuex'
+
   export default {
+    mounted(){
+    // 发送请求获取 分类数据
+      this.$store.dispatch('getCategorysList')
+    },
+    computed: {
+      ...mapState(['categorys'])
+    },
     components: {
       NavBar,
       [Tab.name]: Tab,
@@ -186,8 +59,9 @@
       .category-item{
         margin-top: 10px;
         flex: none;
-        width: 25%;
+        width: 24%;
         text-align: center;
+        border-bottom: 1px solid #eee;
         img{
           width: 90%;
         }

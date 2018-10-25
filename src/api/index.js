@@ -6,3 +6,13 @@ export const reqLogin = ({username, password}) => ajax('api/login',{username, pa
 export const reqRegister = ({username, password}) => ajax('api/register',{username, password},'POST')
 // 异步获取用户信息 实现自动登录
 export const reqUserInfo = () => ajax('api/getuserinfo')
+
+//异步获取秒杀商品信息
+export const reqSkProduct = () => ajax('/skProducts')
+
+// 异步获取商品信息列表
+
+export const reqProductsList = () => ajax('/products')
+// 异步获取商品分类
+export const reqcategorysList = () => ajax('/categorys')
+

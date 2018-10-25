@@ -57,6 +57,9 @@ export default new VueRouter ({
     {
       path:'/productdetail/:id',
       component: ProductDetail,
+      meta: {
+        keepAlive: true
+      }
     },
     {
       path:'/',
