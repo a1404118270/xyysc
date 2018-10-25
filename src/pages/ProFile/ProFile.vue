@@ -39,7 +39,7 @@
       </van-cell-group>
     </div>
     <br/>
-    <van-button size="large" type="danger" @click="logout">退出登录</van-button>
+    <van-button size="large" type="danger" @click="logout" v-if="userInfo._id">退出登录</van-button>
 
   </div>
 </template>

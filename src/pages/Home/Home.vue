@@ -50,7 +50,7 @@
         left-icon="https://img.yzcdn.cn/public_files/2017/8/10/6af5b7168eed548100d9041f07b7c616.png"
       />
     </div>
-    <van-panel title="限时秒杀" :status="'00:30:30'"/>
+    <van-panel title="限时秒杀" :status="time.toString()"/>
 
     <SkProduct/>
     <div class="recommend">
@@ -70,12 +70,13 @@
 </template>
 
 <script>
+
   import { Swipe, SwipeItem ,NoticeBar, Panel, NavBar, Icon} from 'vant';
   import SkProduct from '../../components/SkProduct/SkProduct'
   export default {
     data(){
       return {
-        time: 1.3,// 倒计时的时间
+        time: 1.5,// 倒计时的时间
         arr: [
           {
             id: 1,
@@ -124,9 +125,25 @@
         this.$router.push('/search')
       }
     },
-    computed: {
+    mounted(){
 
 
+      let totalTime = this.time* 60*60 //初始倒计时时间
+
+      let timeId = setInterval(()=> {
+        totalTime --
+        if (totalTime<= 0){
+          clearInterval(timeId)
+          return
+        }
+        let h = parseInt(totalTime / 3600) //小时
+        let m = parseInt((totalTime - h* 3600) / 60 )//分
+        let s = parseInt(totalTime % 60) //秒
+        h = h > 9 ? h : '0'+h
+        m = m > 9 ? m : '0'+m
+        s = s > 9 ? s : '0'+s
+        this.time = h+':'+ m +':'+ s
+      },1000)
     }
   }
 </script>
