@@ -13,4 +13,8 @@ export const RECEIVE_PRODUCT_LIST = 'receive_product_list' //商品列表
 
 export const RECEIVE_CATEGORY_LIST = 'receive_category_list' //分类列表
 
+export const ADD_SHOP_CART = 'add_shop_cart' //加入购物车
+
+export const RECEIVE_SHOP_CART = 'receive_shop_cart' //接收购物车信息
+
 

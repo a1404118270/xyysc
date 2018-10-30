@@ -4,5 +4,6 @@ export default {
   userInfo: {}, //用户信息
   skProduct:[], //秒杀商品
   productList: [], //商品列表
-  categorys: [] //分类数据
+  categorys: [], //分类数据
+  shopCarts:[],//购物车
 }

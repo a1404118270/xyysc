@@ -5,45 +5,64 @@ import {
   RESET_USER_INFO,
   RECEIVE_PRODUCT_LIST,
   RECEIVE_SK_PRODUCT,
-  RECEIVE_CATEGORY_LIST
+  RECEIVE_CATEGORY_LIST,
+  RECEIVE_SHOP_CART,
+  ADD_SHOP_CART
 } from './mutation-type'
-import {reqUserInfo,reqcategorysList,reqSkProduct,reqProductsList} from '../api'
+import {reqUserInfo, reqcategorysList, reqSkProduct, reqProductsList, reqGetShopCart, reqAddShopCart} from '../api'
 
 export default {
   // 同步记录用户信息
-  recordUser ({commit},userInfo) {
+  recordUser({commit}, userInfo) {
     commit(RECEIVE_USER_INFO, {userInfo})
   },
 // 异步获取用户信息实现自动登录
-  async getUserInfo ({commit}) {
+  async getUserInfo({commit}) {
     const result = await reqUserInfo()
-    if (result.code === 0){
-      commit(RECEIVE_USER_INFO,{userInfo: result.data})
+    if (result.code === 0) {
+      commit(RECEIVE_USER_INFO, {userInfo: result.data})
     }
 
   },
 //  重置用户信息（退出登录）
-  resetUserInfo ({commit}){
+  resetUserInfo({commit}) {
     commit(RESET_USER_INFO)
   },
 // 异步获取秒杀商品信息
-  async getSkProduct ({commit}){
+  async getSkProduct({commit}) {
     const result = await reqSkProduct()
     if (result.code === 0) {
-      commit(RECEIVE_SK_PRODUCT,{skProduct:result.data})
+      commit(RECEIVE_SK_PRODUCT, {skProduct: result.data})
     }
   },
 //  异步获取商品列表信息
-  async getProductsList ({commit}){
-    const result  = await reqProductsList()
+  async getProductsList({commit}) {
+    const result = await reqProductsList()
     if (result.code === 0) {
-      commit(RECEIVE_PRODUCT_LIST,{productList: result.data})
+      commit(RECEIVE_PRODUCT_LIST, {productList: result.data})
     }
   },
-  async getCategorysList ({commit}){
-    const result  = await reqcategorysList()
+  //异步获取分类列表信息
+  async getCategorysList({commit}) {
+    const result = await reqcategorysList()
     if (result.code === 0) {
-      commit(RECEIVE_CATEGORY_LIST,{categorys: result.data})
+      commit(RECEIVE_CATEGORY_LIST, {categorys: result.data})
     }
   },
+//  异步获取 购物车信息
+  async getShopCart({commit}){
+    const result = await reqGetShopCart()
+    if (result.code === 0) {
+      commit(RECEIVE_SHOP_CART,{shopCarts: result.carts})
+    }
+  },
+  //异步加入购物车
+  async addShopCarts({commit},product){
+    //异步更新购物车中的数据
+    const result = await reqAddShopCart(product)
+    if (result.code ===0) {
+      commit(ADD_SHOP_CART,{product}) //更新 vuex中 的状态
+    }
+
+  }
 }

@@ -23,8 +23,7 @@
 
   export default {
     mounted(){
-    // 发送请求获取 分类数据
-      this.$store.dispatch('getCategorysList')
+
     },
     computed: {
       ...mapState(['categorys'])

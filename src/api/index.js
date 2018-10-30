@@ -15,4 +15,7 @@ export const reqSkProduct = () => ajax('/skProducts')
 export const reqProductsList = () => ajax('/products')
 // 异步获取商品分类
 export const reqcategorysList = () => ajax('/categorys')
-
+//异步加入购物车
+export const reqAddShopCart = (product) => ajax('api/addshopcart',product,'POST')
+//异步获取购物车信息
+export const reqGetShopCart = () => ajax('api/getshopcart')

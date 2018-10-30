@@ -21,10 +21,13 @@
       body{
         touch-action: pan-y;
       }
+      [v-cloak]{
+        display: none;
+      }
     </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app" v-cloak></div>
     <!-- built files will be auto injected -->
   </body>
 </html>

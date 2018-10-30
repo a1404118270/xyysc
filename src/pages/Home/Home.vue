@@ -64,7 +64,7 @@
           <h3>{{item.title}}</h3>
           <p>
             <span>￥{{item.price}}</span>
-            <span>看相似</span>
+            <span @click.stop="message">看相似</span>
           </p>
         </router-link>
       </div>
@@ -73,7 +73,7 @@
 
 <script>
 
-  import {Swipe, SwipeItem, NoticeBar, Panel, NavBar, Icon} from 'vant';
+  import {Swipe, SwipeItem, NoticeBar, Panel, NavBar, Icon, Toast} from 'vant';
   import {mapState} from 'vuex'
   import SkProduct from '../../components/SkProduct/SkProduct'
 
@@ -90,6 +90,7 @@
       [NoticeBar.name]: NoticeBar,
       [Panel.name]: Panel,
       [Icon.name]: Icon,
+      [Toast.name]: Toast,
       SkProduct
     },
     computed: {
@@ -98,6 +99,9 @@
     methods: {
       toSearch() {
         this.$router.push('/search')
+      },
+      message(){
+        Toast('暂无相似商品')
       }
     },
     mounted() {
@@ -120,10 +124,7 @@
         this.time = h + ':' + m + ':' + s
       }, 1000)
 
-      //  发送 ajax 请求获取秒杀商品的数据
-      this.$store.dispatch('getSkProduct')
-      //  发送 ajax 请求获取商品列表信息
-      this.$store.dispatch('getProductsList')
+
     }
   }
 </script>
@@ -193,6 +194,7 @@
         box-shadow: 1px 1px 1px #eee;
         width: 48%;
         flex: none;
+        text-align: center;
         h3 {
           height: 40px;
           overflow: hidden;
@@ -200,7 +202,7 @@
           font-size: 16px;
         }
         img {
-          width: 100%;
+          width: 90%;
         }
         p {
           margin: 0;
