@@ -19,3 +19,5 @@ export const reqcategorysList = () => ajax('/categorys')
 export const reqAddShopCart = (product) => ajax('api/addshopcart',product,'POST')
 //异步获取购物车信息
 export const reqGetShopCart = () => ajax('api/getshopcart')
+// 删除购物车的信息
+export const reqDeleteShops = (shopId) => ajax('api/deleteshop',shopId)

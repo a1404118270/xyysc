@@ -17,4 +17,6 @@ export const ADD_SHOP_CART = 'add_shop_cart' //加入购物车
 
 export const RECEIVE_SHOP_CART = 'receive_shop_cart' //接收购物车信息
 
+export const DELETE_SHOP = 'delete_shop' //删除购物车中的商品
+
 

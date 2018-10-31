@@ -7,7 +7,8 @@ import {
   RECEIVE_SK_PRODUCT,
   RECEIVE_CATEGORY_LIST,
   ADD_SHOP_CART,
-  RECEIVE_SHOP_CART
+  RECEIVE_SHOP_CART,
+  DELETE_SHOP,
 } from './mutation-type'
 
 export default {
@@ -32,10 +33,10 @@ export default {
     state.categorys = categorys
   },
   //加入购物车
-  [ADD_SHOP_CART](state,{product}) {
+  [ADD_SHOP_CART](state, {product}) {
     let flag = false
     state.shopCarts.forEach(item => { //购物车中有这个商品累计数量
-      if (item.id === product.id){
+      if (item.id === product.id) {
         item.count += product.count
         flag = true
       }
@@ -45,8 +46,14 @@ export default {
     }
 
   },
-  [RECEIVE_SHOP_CART](state,{shopCarts}) { //获取购物车信息
+  [RECEIVE_SHOP_CART](state, {shopCarts}) { //获取购物车信息
     state.shopCarts = shopCarts
+  },
+  [DELETE_SHOP](state, {shopId}) { //删除购物车中的数据
+    console.log(shopId);
+    shopId.forEach(item => { //根据下标过滤数组中的数据
+      state.shopCarts = state.shopCarts.filter(shop => shop.id !== item)
+      console.log(state.shopCarts);
+    })
   }
-
 }

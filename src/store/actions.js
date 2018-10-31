@@ -7,9 +7,18 @@ import {
   RECEIVE_SK_PRODUCT,
   RECEIVE_CATEGORY_LIST,
   RECEIVE_SHOP_CART,
-  ADD_SHOP_CART
+  ADD_SHOP_CART,
+  DELETE_SHOP
 } from './mutation-type'
-import {reqUserInfo, reqcategorysList, reqSkProduct, reqProductsList, reqGetShopCart, reqAddShopCart} from '../api'
+import {
+  reqUserInfo,
+  reqcategorysList,
+  reqSkProduct,
+  reqProductsList,
+  reqGetShopCart,
+  reqAddShopCart,
+  reqDeleteShops
+} from '../api'
 
 export default {
   // 同步记录用户信息
@@ -64,5 +73,12 @@ export default {
       commit(ADD_SHOP_CART,{product}) //更新 vuex中 的状态
     }
 
+  },
+  // 删除购物车中的商品
+  async deleteShops({commit},shopId){
+    //异步删除
+    const result = await reqDeleteShops(shopId)
+    //删除 vuex
+    commit(DELETE_SHOP,{shopId})
   }
 }

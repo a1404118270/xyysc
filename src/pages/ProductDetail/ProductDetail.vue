@@ -1,6 +1,6 @@
 <template>
   <div class="productDetail-container">
-    <van-nav-bar title="商品搜索" class="navbar" fixed>
+    <van-nav-bar title="商品详情" class="navbar" fixed>
       <van-icon name="arrow-left" slot="left" color="#fff" size="18px" @click="$router.back()"/>
     </van-nav-bar>
     <div class="goods">

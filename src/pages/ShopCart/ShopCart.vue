@@ -59,6 +59,7 @@
   } from 'vant';
   import Error from '../../components/Error/Error.vue'
   import {mapState} from 'vuex'
+
   export default {
     components: {
       [Card.name]: Card,
@@ -82,8 +83,17 @@
       totalPrice() { //返回购物车中选中商品价格
         return this.shopCarts.reduce((price, shop) => price + (shop.select ? shop.price * shop.count : 0), 0) * 100
       },
-      totalCount() {
+      totalCount() { //返回选中商品的个数
         return '结算(' + this.shopCarts.reduce((count, shop) => count + (shop.select ? 1 : 0), 0) + ')'
+      },
+      totalShops() {
+        let indexArr = [] //存储选中商品id
+        this.shopCarts.forEach((shop, index) => {
+          if (shop.select) {
+            indexArr.push(shop.id)
+          }
+        })
+        return indexArr
       }
 
     },
@@ -91,13 +101,13 @@
       onSubmit() {
         Toast('暂无后续逻辑')
       },
-      deleteProduct(){ //删除购物车中的商品
+      deleteProduct() { //删除购物车中的商品
         Dialog.confirm({
           title: '确认要删除选中商品吗？'
         }).then(() => {
-
+          this.$store.dispatch('deleteShops', this.totalShops)
         }).catch(() => {
-          // on cancel
+          console.log(this.totalShops);
         });
       }
     }
@@ -112,7 +122,7 @@
       background-color: #FF852A;
       font-size: 16px;
       color: #fff;
-      .rigth-icon{
+      .rigth-icon {
         color: #fff;
         font-size: 14px;
       }
